@@ -151,6 +151,17 @@ def indexer_k_quant_and_cache(k: torch.Tensor, kv_cache: torch.Tensor,
                                                      scale_fmt)
 
 
+def cp_gather_indexer_k_quant_cache(
+    kv_cache: torch.Tensor,  # [num_blocks, block_size, cache_stride]
+    dst_k: torch.Tensor,  # [num_tokens, head_dim]
+    dst_scale: torch.Tensor,  # [num_tokens, head_dim / quant_block_size * 4]
+    block_table: torch.Tensor,  # [batch_size, num_blocks]
+    cu_seq_lens: torch.Tensor  # [batch_size + 1]
+) -> None:
+    torch.ops._C_cache_ops.cp_gather_indexer_k_quant_cache(
+        kv_cache, dst_k, dst_scale, block_table, cu_seq_lens)
+
+
 def convert_fp8(
     dst_cache: torch.Tensor,
     src_cache: torch.Tensor,
