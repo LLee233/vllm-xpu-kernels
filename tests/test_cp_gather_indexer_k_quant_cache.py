@@ -195,8 +195,6 @@ def test_cp_gather_indexer_k_quant_cache_correctness(batch_seq_lens,
            f"head_dim={head_dim} quant_block_size={quant_block_size} "
            f"scale_fmt={scale_fmt}")
     print(f"\n[{tag}]")
-    print(f"  FP8  all-match : {all_fp8_match}")
-    print(f"  Scale all-match: {all_scale_match}")
 
     assert all_fp8_match, f"FP8 data mismatch [{tag}]"
     assert all_scale_match, f"Scale mismatch [{tag}]"
